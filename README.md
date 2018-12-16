@@ -2,7 +2,10 @@
 
 Run stock parser:
 
-./manage.py stock_parser int:N
+python manage.py stock_parser int:N
+
 N - количество потоков
 
 pip install -r requirements.txt
+
+python manage.py runserver
