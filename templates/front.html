@@ -1,0 +1,90 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		{% block page_title %}
+		{% endblock page_title %}
+	</title>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	{% block head_include %}
+	{% endblock head_include %}
+	<style type="text/css">
+		html {
+			background: #1d4aa1;
+			color: #fff;
+		}
+		body {
+			background: none;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			margin: auto;
+			padding: 10px 20px;
+		}
+		.page-name {
+			color: #fff;
+			background: #000;
+		}
+		.page-content {
+			background: #ddd;
+			color: #000;
+		    margin-bottom: 20px;
+		    padding-bottom: 10px;
+		}
+		a {
+			color: #3792b0;
+		}
+		a:hover{
+			color: #1d4aa1;
+			text-decoration: none;
+		}
+		.menu a {
+			color: #fff;
+		}
+		.menu a:hover {
+			color: #15a2d1;
+		}
+		.button {
+			padding: 3px 20px;
+			color: #fff;
+			background: #777272;
+			border: none;
+			cursor: pointer;
+		}
+		.button:hover{
+			color: #ddd;
+		}
+		.table-head {
+			background: #fff;
+			margin-top: 10px;
+		}
+		.form-row {
+			padding: 10px 0px;
+		}
+	</style>
+</head>
+<body>
+<div class="col-md-2 menu">
+	<a href="{% url 'stock:ticker_list' %}">Главная страница</a>
+</div>
+{% block menu %}
+{% endblock menu %}
+<div class="col-md-12 page-name">
+	{% block page_name %}
+	{% endblock page_name %}
+</div>
+
+<div class="col-md-12 page-content">
+	{% block page_content %}
+	{% endblock page_content %}
+</div>
+
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+{% block end_include %}
+{% endblock end_include %}
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+{% extends 'front.html' %}
+
+{% block page_title %}
+	{{ ticker.name }}
+{% endblock page_title %}
+
+{% block head_include %}
+{% endblock head_include %}
+
+{% block page_name %}
+	<div class="row">
+		<div class="col-md-4">
+			{{ ticker.name }}			
+		</div>
+		<div class="offset-md-5 col-md-3" style="overflow: hidden;">
+			<a class="button" href="{% url 'stock:ticker_prices' ticker.pk %}">Цены</a>
+		</div>
+	</div>
+{% endblock page_name %}
+
+{% block page_content %}
+	<div class="row table-head">
+			<div class="col-md-2">
+				Insider
+			</div>
+			<div class="col-md-1">
+				Relation
+			</div>
+			<div class="col-md-2">
+				Last date
+			</div>
+			<div class="col-md-2">
+				Transaction type
+			</div>
+			<div class="col-md-2">
+				OwnerType
+			</div>
+			<div class="col-md-1">
+				Shares Traded
+			</div>
+			<div class="col-md-1">
+				Last price
+			</div>
+			<div class="col-md-1">
+				Shares Held
+			</div>
+	</div>
+	<div class="row">
+		{% for transaction in ticker_transactions %}
+			<div class="col-md-2">
+				{% if is_insider_transactions %}
+					{{ transaction.insider }}
+				{% else %}
+					<a href="{% url 'stock:ticker_insider' ticker.pk transaction.insider.slug %}">
+						{{ transaction.insider }}
+					</a>
+				{% endif %}
+			</div>
+			<div class="col-md-1">
+				{{ transaction.relation }}
+			</div>
+			<div class="col-md-2">
+				{{ transaction.last_date }}
+			</div>
+			<div class="col-md-2">
+				{{ transaction.transaction_type }}
+			</div>
+			<div class="col-md-2">
+				{{ transaction.owner_type }}
+			</div>
+			<div class="col-md-1">
+				{{ transaction.shares_traded }}
+			</div>
+			<div class="col-md-1">
+				{{ transaction.last_price }}
+			</div>
+			<div class="col-md-1">
+				{{ transaction.shares_held }}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock page_content %}
+
+{% block end_include %}
+{% endblock end_include %}

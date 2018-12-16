@@ -1,0 +1,81 @@
+{% extends 'front.html' %}
+
+{% block page_title %}
+	{{ ticker.name }}
+{% endblock page_title %}
+
+{% block head_include %}
+	<link href="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+{% endblock head_include %}
+
+{% block page_name %}
+	<div class="row">
+		<div class="col-md-4">
+			{{ ticker.name }}
+		</div>
+	</div>
+	<div class="row form-row">
+		<div class="col-md-12" style="text-align: right;">
+			<form action="{% url 'stock:ticker_analytics' ticker.pk %}">
+				{% for field in form %}
+					{{ field.label }}
+					{{ field }}
+				{% endfor %}
+				<button class="button">Анализировать</button>
+			</form>
+		</div>
+	</div>
+{% endblock page_name %}
+
+{% block page_content %}
+	<div class="row">
+		<div class="col-md-12">
+			Аналитика с {{ date_from }} по {{ date_to }}
+		</div>
+	</div>
+	{% if not_found %}
+		<div class="row">
+			<div class="col-md-12" style="text-align: center;">
+				Данные не найдены
+			</div>
+		</div>
+	{% else %}
+		<div class="row">
+				<div class="col-md-3">
+					Открытие
+				</div>
+				<div class="col-md-3">
+					Максимум
+				</div>
+				<div class="col-md-3">
+					Минимум
+				</div>
+				<div class="col-md-2">
+					Закрытие
+				</div>		
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				{{ diff_open_price }}
+			</div>
+			<div class="col-md-3">
+				{{ diff_high_price }}
+			</div>
+			<div class="col-md-3">
+				{{ diff_low_price }}
+			</div>
+			<div class="col-md-3">
+				{{ diff_close_price }}
+			</div>
+		</div>
+	{% endif %}
+{% endblock page_content %}
+
+{% block end_include %}
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="//cdn.bootcss.com/moment.js/2.17.1/moment.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
+	<script>
+	    $( ".datepicker" ).datetimepicker({format: "YYYY-MM-DD"});
+	</script>
+{% endblock end_include %}

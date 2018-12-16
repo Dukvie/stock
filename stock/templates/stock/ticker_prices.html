@@ -1,0 +1,90 @@
+{% extends 'front.html' %}
+
+{% block page_title %}
+	{{ ticker.name }}
+{% endblock page_title %}
+
+{% block head_include %}
+	<link href="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+{% endblock head_include %}
+
+{% block page_name %}
+	<div class="row">
+		<div class="col-md-4">
+			{{ ticker.name }}			
+		</div>
+		<div class="offset-md-4 col-md-4" style="overflow: hidden;">
+			<a class="button" href="{% url 'stock:ticker_insider' ticker.pk %}">Данные торговли владельцев компании</a>
+		</div>
+	</div>
+	<div class="row form-row">
+		<div class="col-md-12" style="text-align: right;">
+			<form action="{% url 'stock:ticker_analytics' ticker.pk %}">
+				{% for field in analytics_form %}
+					{{ field.label }}
+					{{ field }}
+				{% endfor %}
+				<button class="button">Анализировать</button>
+			</form>
+		</div>
+	</div>
+	<div class="row form-row">
+		<div class="col-md-12" style="text-align: right;">
+			<form action="{% url 'stock:ticker_delta' ticker.pk %}">
+				{% for field in delta_form %}
+					{{ field.label }}
+					{{ field }}
+				{% endfor %}
+				<button class="button">Рассчитать</button>
+			</form>
+		</div>
+	</div>
+{% endblock page_name %}
+
+{% block page_content %}
+	<div class="row table-head">
+			<div class="col-md-4">
+				Дата
+			</div>
+			<div class="col-md-2">
+				Открытие
+			</div>
+			<div class="col-md-2">
+				Максимум
+			</div>
+			<div class="col-md-2">
+				Минимум
+			</div>
+			<div class="col-md-2">
+				Закрытие
+			</div>		
+	</div>
+	<div class="row">
+		{% for price in ticker_prices %}
+			<div class="col-md-4">
+				{{ price.date }}
+			</div>
+			<div class="col-md-2">
+				{{ price.open_price }}
+			</div>
+			<div class="col-md-2">
+				{{ price.high_price }}
+			</div>
+			<div class="col-md-2">
+				{{ price.low_price }}
+			</div>
+			<div class="col-md-2">
+				{{ price.close_price }}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock page_content %}
+
+{% block end_include %}
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="//cdn.bootcss.com/moment.js/2.17.1/moment.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
+	<script>
+	    $( ".datepicker" ).datetimepicker({format: "YYYY-MM-DD"});
+	</script>
+{% endblock end_include %}

@@ -1,0 +1,25 @@
+{% extends 'front.html' %}
+
+{% block page_title %}
+	Список акций
+{% endblock page_title %}
+
+{% block head_include %}
+{% endblock head_include %}
+
+{% block page_name %}
+	Список акций
+{% endblock page_name %}
+
+{% block page_content %}
+	<div class="row">
+		{% for ticker in tickers %}
+			<div class="col-md-12">
+				<a href="{% url 'stock:ticker_prices' ticker.pk %}">{{ ticker.name }}</a>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock page_content %}
+
+{% block end_include %}
+{% endblock end_include %}
