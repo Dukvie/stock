@@ -93,7 +93,7 @@ def ticker_delta(request, ticker_pk, api=False):
         return JsonResponse(context) if api else render(request, 'stock/ticker_delta.html', context)
     price_type += '_price'
     s = (
-        '''SELECT MAX(first_select.date) as first_date, second_date, 'Рост' as direction FROM (
+        '''SELECT MAX(first_select.date) as first_date, second_date, 'Рост' FROM (
              SELECT t1.date, t1.{price_type}, MIN(t2.date) as second_date
              FROM stock_tickerprice t1
              INNER JOIN stock_tickerprice t2
@@ -104,7 +104,7 @@ def ticker_delta(request, ticker_pk, api=False):
              GROUP BY t1.id ORDER BY t1.date) first_select
          GROUP BY second_date
          UNION
-         SELECT MAX(second_select.date) as first_date, second_date, 'Падение' as direction FROM (
+         SELECT MAX(second_select.date) as first_date, second_date, 'Падение' FROM (
              SELECT t1.date, t1.{price_type}, MIN(t2.date) as second_date
              FROM stock_tickerprice t1
              INNER JOIN stock_tickerprice t2
